@@ -1,0 +1,50 @@
+section.h-100
+  .container.h-100
+    .row.justify-content-sm-center.h-100
+      .col-xxl-12.col-xl-5.col-lg-5.col-md-7.col-sm-9
+        .text-center.my-5
+        .card.shadow-lg
+          .card-body.p-4
+            h1.fs-4.card-title.fw-bold.mb-4 Detail Card
+            .card.shadow-lg
+              .card-body
+                dl.row
+                  dt.col-sm-3 Account Number
+                  dd.col-sm-9 = @stock.account_number
+                  hr
+                  dt.col-sm-3 Code
+                  dd.col-sm-9 = @stock.code
+                  hr
+                  dt.col-sm-3 Name
+                  dd.col-sm-9 = @stock.name
+                  hr
+                  .p-3
+                    h5.mb-2 Transaction History
+                    .card
+                      .card-body
+                        h5.mb-2
+                        .card
+                          .card-body
+                            table.table.table-striped.table-hover
+                              thead
+                                tr
+                                  th scope='col' Reference
+                                  th scope='col' Transaction
+                                  th scope='col' Amount
+                                  th scope='col' Source
+                                  th scope='col' Created At
+                              tbody
+                                - @stock.transactions.order(created_at: :desc).each do |transaction|
+                                  tr
+                                    td = transaction.code
+                                    td = transaction.transactable_type
+                                    td = card_badge_currency(transaction)
+                                    td = "#{transaction.sourceable.user.account_number} (#{transaction.sourceable.user.username})"
+                                    td = to_datetime(transaction.created_at)
+              .card-footer
+                = link_to 'Back', stocks_path, class: 'btn btn-secondary'
+                .float-end.d-flex
+                  = link_to 'Edit', edit_stock_path(@stock), class: 'btn btn-primary mx-2'
+                  = button_to stock_path(@stock), form: { data: { turbo_confirm: 'Are you sure ?' } },
+                              method: :delete, class: 'btn btn-danger' do
+                              i.bi.bi-trash-fill

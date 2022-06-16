@@ -1,0 +1,21 @@
+section.h-100
+  .container.h-100
+    .row.justify-content-sm-center.h-100
+      .col-xxl-12.col-xl-5.col-lg-5.col-md-7.col-sm-9
+        .text-center.my-5
+        .card.shadow-lg
+          .card-body.p-4
+            h1.fs-4.card-title.fw-bold.mb-4 Manage Cards
+            .card.shadow-lg
+              .card-header.d-flex.justify-content-between
+                = search_form_for @search do |f|
+                    = f.search_field :code_or_name_cont, placeholder: 'Search by code or name', class: 'form-control'
+                = button_to(new_stock_path, method: :get, class: ' btn btn-primary') do
+                  i.bi.bi-plus-square-fill
+                  | &nbsp;
+                  b = 'Add Card'
+              .card-body
+                = render 'stocks'
+              .card-footer
+                .float-end
+                  = paginate @stocks

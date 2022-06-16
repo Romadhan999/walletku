@@ -1,0 +1,32 @@
+header.p-3.bg-dark.text-white.sticky-top
+  .container
+    .d-flex.flex-wrap.align-items-center.justify-content-center.justify-content-lg-start
+      a.d-flex.align-items-center.mb-2.mb-lg-0.text-white.text-decoration-none href='/'
+        img.bi.me-2 alt='' height='42' src='https://cdn-icons-png.flaticon.com/512/272/272889.png' width='40'
+      ul.nav.col-6.col-lg-auto.me-lg-auto.mb-2.justify-content-center.mb-md-0
+        li
+          = link_to 'Top Up', '#', data: { bs_target: '#topUpModal', bs_toggle: 'modal' }, class: 'nav-link px-2 text-white'
+        li
+          = link_to 'Transfer', '#', data: { bs_target: '#transferModal', bs_toggle: 'modal' }, class: 'nav-link px-2 text-white'
+        li
+          = link_to 'Withdraw', '#', data: { bs_target: '#withdrawModal', bs_toggle: 'modal' }, class: 'nav-link px-2 text-white'
+        li
+          = link_to('My Cards', stocks_path, class: 'nav-link px-2 text-white')
+      - if user_signed_in?
+        ul.nav.col-6.col-lg-auto.me-lg-auto.mb-2.justify-content-center.mb-md-0
+          li.nav-item
+            b = link_to "#{current_user.username}: #{to_currency(current_user.balance)}",
+                        wallet_history_homes_path(user_id: current_user.id),
+                        class: 'nav-link px-2 text-white'
+      .text-end.d-flex
+        - if user_signed_in?
+          = button_to('Logout', destroy_user_session_path, method: :delete, class: 'btn btn-outline-danger me-2')
+          = button_to('Signup', new_user_registration_path, method: :get, class: 'btn btn-warning')
+        - else
+          = button_to('Login', new_user_session_path, method: :get, class: 'btn btn-outline-light me-2')
+          = button_to('Signup', new_user_registration_path, method: :get, class: 'btn btn-warning')
+
+- if current_user.present?
+  = render 'shared/top_up'
+  = render 'shared/transfer'
+  = render 'shared/withdraw'

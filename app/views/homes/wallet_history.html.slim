@@ -1,0 +1,70 @@
+section.h-100
+  .container.h-100
+    .row.justify-content-sm-center.h-100
+      .col-xxl-12.col-xl-5.col-lg-5.col-md-7.col-sm-9
+        .text-center.my-5
+        .card.shadow-lg
+          .card-body.p-4
+            h1.fs-4.card-title.fw-bold.mb-4 Detail Walletku
+            .card.shadow-lg
+              .card-body.
+                dl.row
+                  .col-md-6
+                    .d-flex
+                      dt.col-sm-3 Account Number
+                      dd.col-sm-9 = @user.account_number
+                  .col-md-6
+                    .d-flex
+                      dt.col-sm-3 Username
+                      dd.col-sm-9 = @user.username
+                  hr
+                  .col-md-6
+                    .d-flex
+                      dt.col-sm-3 Full Name
+                      dd.col-sm-9 = @user.full_name
+                  .col-md-6
+                    .d-flex
+                      dt.col-sm-3 Phone Number
+                      dd.col-sm-9 = @user.phone_number
+                  hr
+                  .col-md-6
+                    .d-flex
+                      dt.col-sm-3 Email
+                      dd.col-sm-9 = @user.email
+                  .col-md-6
+                    .d-flex
+                      dt.col-sm-3 Balance
+                      dd.col-sm-9 = to_currency(@user.balance)
+                  hr
+                  .p-3
+                    h5.mb-2 Wallet History
+                    .card
+                      .card-body
+                        h5.mb-2
+                        .card
+                          .card-body
+                            table.table.table-striped.table-hover
+                              thead
+                                tr
+                                  th scope='col' Reference
+                                  th scope='col' Transaction
+                                  th scope='col' Amount
+                                  th scope='col' Source
+                                  th scope='col' Created At
+                              tbody
+                                - @user.transactions.order(created_at: :desc).each do |transaction|
+                                  tr
+                                    td = transaction.code
+                                    td = transaction.transactable_type
+                                    td = wallet_badge_currency(transaction)
+                                    td
+                                      - if transaction.transactable_type == 'Deposit'
+                                        = "#{transaction.transactable.sender.account_number} (#{transaction.transactable.sender.name})"
+                                      - else
+                                        = "#{transaction.sourceable.account_number} (#{transaction.sourceable.username})"
+                                        - if transaction.transactable_type == 'Transfer'
+                                          br
+                                          small.text-muted = "note: #{transaction.transactable.note}"
+                                    td = to_datetime(transaction.created_at)
+              .card-footer
+                = link_to 'Back', root_path, class: 'btn btn-secondary'

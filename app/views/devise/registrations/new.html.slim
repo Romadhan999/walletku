@@ -1,0 +1,39 @@
+section.h-100
+  .container.h-100
+    .row.justify-content-sm-center.h-100
+      .col-xxl-4.col-xl-5.col-lg-5.col-md-7.col-sm-9
+        .text-center.my-5
+        .card.shadow-lg
+          .card-body.p-5
+            h1.fs-4.card-title.fw-bold.mb-4 Register
+            = simple_form_for(resource, as: resource_name, url: registration_path(resource_name), input_html: { class: 'needs-validation', autocomplete: :off }) do |f|
+              = f.error_notification
+              .mb-3
+                = f.label :full_name, class: 'mb-2 text-muted'
+                = f.input :full_name, label: false, required: true, autofocus: true, input_html: { class: 'form-control' }
+              .mb-3
+                = f.label :email, class: 'mb-2 text-muted'
+                = f.input :email, label: false, required: true, input_html: { class: 'form-control' }
+              .mb-3
+                = f.label :phone_number, class: 'mb-2 text-muted'
+                = f.input :phone_number, label: false, required: true, input_html: { class: 'form-control' }
+              .mb-3
+                = f.label :username, class: 'mb-2 text-muted'
+                = f.input :username, label: false, required: true, input_html: { class: 'form-control' }
+              .mb-3
+                = f.label :password, class: 'mb-2 text-muted'
+                = f.input :password, label: false, required: true,
+                          hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length),
+                          input_html: { autocomplete: 'new-password', class: 'form-control' }
+              .mb-3
+                = f.label :password_confirmation, class: 'mb-2 text-muted'
+                = f.input :password_confirmation, label: false, required: true,
+                          input_html: { autocomplete: 'new-password', class: 'form-control' }
+              p.form-text.text-muted.mb-3 By registering you agree with our terms and condition.
+              .align-items-center.d-flex
+                = f.button :submit, 'Signup', class: 'btn btn-primary ms-auto'
+          .card-footer.py-3.border-0
+            .text-center
+              = 'Already have an account?'
+              | &nbsp;
+              = link_to 'Login', new_session_path(resource_name), class: 'text-dark'

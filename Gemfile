@@ -73,3 +73,12 @@ group :test do
   gem "selenium-webdriver"
   gem "webdrivers"
 end
+
+# Added by us
+gem 'devise'
+gem 'enumerize'
+gem 'kaminari'
+gem 'ransack'
+gem 'rubocop', require: false
+gem 'simple_form'
+gem 'slim-rails'

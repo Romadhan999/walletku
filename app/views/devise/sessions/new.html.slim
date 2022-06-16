@@ -1,0 +1,27 @@
+section.h-100
+  .container.h-100
+    .row.justify-content-sm-center.h-100
+      .col-xxl-4.col-xl-5.col-lg-5.col-md-7.col-sm-9
+        .text-center.my-5
+        .card.shadow-lg
+          .card-body.p-5
+            h1.fs-4.card-title.fw-bold.mb-4 Login
+            = simple_form_for(resource, as: resource_name, url: session_path(resource_name), input_html: { class: 'needs-validation', autocomplete: :off }) do |f|
+              .mb-3
+                = f.label :username, class: 'mb-2 text-muted'
+                = f.input :username, label: false, required: false, autofocus: true, input_html: { class: 'form-control' }
+              .mb-3
+                .mb-2.w-100
+                  = f.label :password, class: 'text-muted'
+                  = link_to 'Forgot Password?', new_password_path(resource_name), class: 'float-end'
+                = f.input :password, label: false, input_html: { class: 'form-control' }
+              .d-flex.align-items-center
+                .form-check
+                  input#remember_me.form-check-input name='remember_me' type='checkbox'
+                  label.form-check-label for='remember_me'  Remember Me
+                = f.button :submit, 'Login', class: 'btn btn-primary ms-auto'
+          .card-footer.py-3.border-0
+            .text-center
+              = "Don't have an account?"
+              | &nbsp;
+              = link_to 'Create One', new_registration_path(resource_name), class: 'text-dark'

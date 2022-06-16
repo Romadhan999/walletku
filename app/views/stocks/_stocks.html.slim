@@ -1,0 +1,28 @@
+- if @stocks.present?
+  table.table.table-striped.table-hover
+    thead
+      tr
+        th scope='col' Account number
+        th scope='col' Code
+        th scope='col' Name
+        th scope='col' Actions
+    tbody
+      - @stocks.each do |stock|
+        tr
+          td = link_to stock.account_number, stock
+          td = stock.code
+          td = stock.name
+          td
+            .dropdown
+              button#actions.btn.btn-secondary aria-expanded='false' data-bs-toggle='dropdown' type='button'
+                i.bi.bi-gear-fill
+              ul.dropdown-menu aria-labelledby='actions'
+                li
+                  = link_to 'Show', stock, class: 'dropdown-item'
+                li
+                  = link_to 'Edit', edit_stock_path(stock), class: 'dropdown-item'
+                li
+                  = button_to('Destroy', stock_path(stock), form: { data: { turbo_confirm: 'Are you sure ?' } },
+                              method: :delete, class: 'btn btn-link dropdown-item')
+- else
+  h5 Cards not found.

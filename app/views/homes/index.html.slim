@@ -1,0 +1,9 @@
+.container-xxl.bd-gutter.mt-3.my-md-4.bd-layout
+  h1 Welcome, this is the Walletku Application!
+  = link_to '#', data: { bs_target: '#transferModal', bs_toggle: 'modal' }, class: 'btn btn-lg btn-primary' do
+    i.bi.bi-plus-square-fill
+    | &nbsp;
+    b = 'Transfer'
+    
+- if current_user.present?
+  = render 'shared/transfer'

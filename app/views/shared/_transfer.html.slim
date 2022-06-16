@@ -1,0 +1,25 @@
+#transferModal.modal.fade aria-hidden='true' aria-labelledby='exampleModalLabel' tabindex='-1'
+  .modal-dialog
+    .modal-content
+      .modal-header
+        h5#exampleModalLabel.modal-title Tranfer
+        button.btn-close aria-label='Close' data-bs-dismiss='modal' type='button'
+      = simple_form_for(Transfer.new, method: :post, url: transfers_path) do |f|
+        .modal-body
+          .card-body
+            = f.error_notification
+            = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
+            = f.input :sender_id, as: :hidden, input_html: { value: current_user.id }
+            .row.g-3
+              .col-md-12
+                = f.input :amount, autofocus: true, input_html: { class: 'form-control' }
+              .col-md-12
+                = f.input :receiver_id, label: 'Destination Account',
+                          collection: User.available_users(current_user.id),
+                          prompt: 'Select account', input_html: { class: 'form-control' }
+              .col-md-12
+                = f.input :note, input_html: { class: 'form-control' }
+        .modal-footer
+          = link_to 'Close', '#', data: { bs_dismiss: :modal }, class: 'btn btn-secondary'
+          .float-end
+            = f.button :submit, 'Save', class: 'btn btn-primary ms-auto'
