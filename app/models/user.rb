@@ -8,7 +8,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   validates :full_name, :username, :phone_number, :password_confirmation, presence: true
-  validates :username, length: { within: 6..20, too_short: 'is too short (minimum is 6 characters)',
+  validates :username, length: { within: 6..25, too_short: 'is too short (minimum is 6 characters)',
                                  too_long: 'is too long (maximum is 25 characters)' }
 
   before_create do
